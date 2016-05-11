@@ -1,0 +1,51 @@
+1) En version se debe poner $plugin->component = '[nombre de la componente]'; ///////(el nomre debe ser unico y debe reflejar la utilidad de la capacidad preferiblemente)
+
+ej:
+          $plugin->component = 'local_toolbox';
+          
+2) En una carpeta "db" se debe crear un archivo access.php en donde se define el cuerpo de la capacidad y sus 
+especificaciones para los diferentes usuarios(prohibit, allow, prevent.. etc).
+
+ej:
+
+           $capabilities = array(
+//////////[nombre componente]:[nombre capacidad]//////////////
+    'local/toolbox:viewmanager' => array(
+    	// Capability type (write, read, etc.)
+        'captype' => 'read',
+        // Context in which the capability can be set (course, category, etc.)
+        'contextlevel' => CONTEXT_SYSTEM,
+        // Default values for different roles (PROHIBIT, ALLOW, PREVENT, etc.)
+        'legacy'=>array(
+            'teacher' => CAP_PROHIBIT,
+            'editingteacher' => CAP_PROHIBIT,
+            'manager' => CAP_ALLOW,
+			'student'=>CAP_PROHIBIT)
+			)
+			);
+			
+3) En la carpeta de lang (que se refiere al lenguaje) se pone la carpeta de "en"(ingles) y "es"(espa�ol) en donde
+se crea un archivo php con el mismo nombre de la componente y luego se le agregan los string.
+
+ej:
+       $string['nombre capacidad']='descripci�n de lo que hace la capacidad';
+       
+//////////error comun/////////////////////     
+  
+SE PRODUCE POR PONER EL NOMBRE DEL STRING DE MANERA INCORRECTA O PONER EL STRING EN UNA UBICACI�N ERRONEA
+
+ej:
+
+
+Invalid get_string() identifier: 'uai_toolbox:viewuser' or component 'local_toolbox'. 
+[[[[[Perhaps you are missing $string['uai_toolbox:viewuser'] = '';
+ in C:\xampp\htdocs\webcursos/local/toolbox/lang/en/local_toolbox.php?]]]]]](INDICA EL NOMBRE CORRECTO PARA TU STRING Y LA UBICACI�N ADECUADA EN DONDE ESTE SE DEBE ENCONTRAR)
+o	line 6649 of \lib\moodlelib.php: call to debugging()
+o	line 7273 of \lib\moodlelib.php: call to core_string_manager->get_string()
+o	line 2773 of \lib\accesslib.php: call to get_string()
+o	line 70 of \admin\tool\capability\index.php: call to get_capability_string()
+
+
+////////////////////////////////////////////////////
+
+4) como ultimo paso se debe actualizar la version para que los cambios sean instalados y las capacidades aparescan en la base de datos en la base de dato.
