@@ -1,13 +1,50 @@
-<!DOCTYPE <!DOCTYPE html>
-<html>
-<form id="formulario" action="enviado.php" method="post">
-    <fieldset>
-        <legend>Formulario de Ejemplo</legend>
-            <label>Nombre</label>
-                <input id="campo1" name="nombre" type="text" />
-            <label>Email</label>
-                <input id="campo2" name="email" type="text" />
-            <input id="campo3" name="enviar" type="submit" value="Enviar" />
-    </fieldset>
-</form>
-</html>
+<?php
+
+// Minimum for Moodle to work, the basic libraries
+require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+// Parameter passed from the url.
+$name = 'hola';
+// Moodle pages require a context, that can be system, course or module (activity or resource)
+$context = context_system::instance();
+$PAGE->set_context($context);
+// Check that user is logued in the course.
+require_login();
+// Page navigation and URL settings.
+$PAGE->set_url(new moodle_url('/local/moodle', array('filter'=>$name)));
+$PAGE->set_pagelayout('incourse');
+$PAGE->set_title('Solicitud de Impresión');
+// Show the page header
+// Here goes the content
+
+
+
+echo $OUTPUT->header();
+echo' 
+		<form action="enviar_solicitud.php" method="post" enctype="multipart/form-data">
+     	<fieldset>
+        <legend>Formulario de Impresión</legend>
+		<label>Carrera</label>
+		<input list="Carreras" name="Selecciona Carrera"/>
+		<datalist id="Carreras"
+		<option label="Ingeniería Comercial" value="Ingeniería Comercial">
+		<option label="Ingeniería Civil" value="Ingeniería Civil">
+		<option label="Periodismo" value="Periodismo">
+		<option label="Derecho" value="Derecho">
+		<option label="Diseño" value="Diseño">
+		</datalist><br/>
+		
+		<label>Libro o Material</label>
+		<input id="campo0" name="..." type="text" /><br/>
+		<label>Páginas</label>
+		<input id="campo1" name="desde" type="number" />
+        <input id="campo2" name="hasta" type="number" />
+		<label>Fecha</label>
+        <input id="campo3" name="Fecha" type="datetime" />
+		
+		<input id="campo4" name="Enviar Solicitud" type="submit" value="Enviar" />
+        </fieldset>';
+// el usuario entra páginas a imprimir y envía la solicitud.
+
+// Show the page footer
+echo $OUTPUT->footer();
+Status API Training Shop Blog About
